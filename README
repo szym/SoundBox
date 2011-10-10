@@ -1,0 +1,12 @@
+[Work in progress]
+
+SoundBox manages a bunch of sound clips. Load them up front, then tell the
+SoudBox which clip to play, at what position and volume. The clip will loop
+by default, but it can loop any smaller part of it too.
+
+Each clip can only be played once at a time. To play the same sound multiple
+times with overlap you need to load the sound bit as multiple clips.
+
+Supports PCM in 8-bit, 16-bit, mono, stereo.
+Support for sampling rates (and 8-bit) varies by device.
+Samsung Galaxy S cracks at 48kHz.

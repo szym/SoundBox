@@ -1,3 +1,6 @@
+// Copyright (c) 2011 Szymon Jakubczak. All rights reserved.
+// Use of this source code is governed by a license that can be found in
+// the LICENSE file.
 package net.szym.soundbox;
 
 import android.media.AudioFormat;
@@ -57,9 +60,11 @@ public class SoundBox {
 	private ArrayList<Track> clips = new ArrayList<Track>();
 
 	
-	// load a clip from the given filename and store it
-	// Note: executes the task at creation time
-	// use .id to later refer to the loaded clip
+	/**
+	 * load a clip from the given filename and store it
+	 * Note: executes the task at creation time
+	 * use .id to later refer to the loaded clip
+	 */
 	class AsyncLoad extends AsyncTask<String, Void, Track> {
 		static final String TAG = "SoundBox.AsyncLoad";
 		final int id;
@@ -93,9 +98,13 @@ public class SoundBox {
 	
 	public SoundBox() {}
 	
-	// this is asynchronous: at some point in the future the clip will be available.
-	// However, rather than notifying anybody once the clip is available, we simply ignore 
-	// all requests (below) if the clip is not there yet (or failed to load).
+	/**
+	 * Load asynchronously: at some point in the future the clip will be available.
+	 * Rather than notifying anybody once the clip is available, we simply ignore
+	 * all requests (below) if the clip is not there yet (or failed to load).
+	 * @param filename
+	 * @return clip id
+	 */
 	public int load(String filename) {
 		return new AsyncLoad(filename).id;
 	}
@@ -111,7 +120,10 @@ public class SoundBox {
 		return track.track.getSampleRate();
 	}
 	
-	// get length (in samples)
+	/**
+	 * @param clip id
+	 * @return length (in samples)
+	 */
 	public int getLength(int id) {
 		Track track = clips.get(id);
 		if (track == null) return 0;
@@ -125,7 +137,11 @@ public class SoundBox {
 		track.track.play();
 	}
 	
-	// seek to specific position (in frames)
+	/**
+	 * seek to specific position
+	 * @param clip id
+	 * @param offset (in samples)
+	 */
 	public void seek(int id, int offset) {
 		Track track = clips.get(id);
 		if (track == null) return;

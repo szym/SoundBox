@@ -1,3 +1,6 @@
+// Copyright (c) 2011 Szymon Jakubczak. All rights reserved.
+// Use of this source code is governed by a license that can be found in
+// the LICENSE file.
 package net.szym.soundbox;
 
 import android.app.Activity;

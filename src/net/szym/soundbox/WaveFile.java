@@ -1,9 +1,13 @@
+// Copyright (c) 2011 Szymon Jakubczak. All rights reserved.
+// Use of this source code is governed by a license that can be found in
+// the LICENSE file.
 package net.szym.soundbox;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  * Utility to read little-endian integers from an InputStream.
@@ -74,18 +78,18 @@ public class WaveFile {
 	public WaveFile(InputStream is) throws IOException {
 		Chunk riff = new Chunk();
 		riff.read(is);
-		check(riff.id == ID_RIFF, "Bad header");
+		check(Arrays.equals(ID_RIFF, riff.id), "Bad header");
 		is = riff.blob();
 		byte[] format = new byte[4];
 		int nr = is.read(format);
 		check(nr == 4, "Missing format");
-		check(format == ID_WAVE, "Bad format");
+		check(Arrays.equals(ID_WAVE, format), "Bad format");
 		Chunk fmt = new Chunk();
 		fmt.read(is);
-		check(fmt.id == ID_FMT, "Missing fmt");
+		check(Arrays.equals(ID_FMT, fmt.id), "Missing fmt");
 		Chunk datachunk = new Chunk();
 		datachunk.read(is);
-		check(datachunk.id == ID_DATA, "Missing data");
+		check(Arrays.equals(ID_DATA, datachunk.id), "Missing data");
 		
 		LittleEndianInputStream lis = new LittleEndianInputStream(fmt.blob());
 		int audioFormat = lis.readShort();
@@ -102,8 +106,9 @@ public class WaveFile {
 	}
 	
 	private static void check(boolean val, String msg) throws IOException {
-		if (!val)
+		if (!val) {
 			throw new IOException(msg);
+		}
 	}
 	
 	/**
